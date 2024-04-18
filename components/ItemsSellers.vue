@@ -1,19 +1,12 @@
 <script setup lang="ts">
-
-type Item = {
-  image: string | null
-  label: string | null
-  price: string | null
-}
-
 const props = defineProps<{
-  items: Item,
+  items: Object,
 }>()
 </script>
 
 <template>
   <div class="flex items-center space-x-6">
-    <div v-for="item in props.items" class="w-[245.76px] rounded-lg overflow-hidden relative">
+    <div v-for="item in items" class="w-[245.76px] rounded-lg overflow-hidden relative">
       <img :src="item?.image" alt="" class="w-[245.76px] h-[247.68px] object-fill">
 
       <div class="px-4 py-4 relative space-y-4 bg-orange-10 border border-orange-10">

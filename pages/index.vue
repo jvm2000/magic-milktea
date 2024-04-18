@@ -133,15 +133,15 @@ const coffees = [
 
             <TabPanels class="mt-24">
               <TabPanel>
-                <Milkteas :items="milkteas" />
+                <ItemsSellers :items="milkteas" />
               </TabPanel>
 
               <TabPanel>
-                <Milkteas :items="coffees" />
+                <ItemsSellers :items="coffees" />
               </TabPanel>
 
               <TabPanel>
-                <Milkteas :items="milkteas" />
+                <ItemsSellers :items="milkteas" />
               </TabPanel>
 
               <TabPanel>
@@ -152,6 +152,35 @@ const coffees = [
         </div>
 
         <p class="text-2xl font-semibold text-orange-10 cursor-pointer">View Full Menu</p>
+      </div>
+    </div>
+
+    <div class="w-full py-28 grid place-items-center relative z-0">
+      <div class="flex flex-col items-start">
+        <div class="flex flex-col items-start space-y-10">
+          <div class="flex items-center space-x-4">
+            <p class="text-[40px] text-black-10 font-bold uppercase">Enchanting Atmosphere</p>
+            <img src="/icons/star.svg" class="w-10 h-10">
+          </div>
+
+          <p class="w-[1000px] text-lg text-black-10">
+            But Magic Milktea is more than just a place to enjoy great drinks—it's a community, a gathering spot where friends old and new come together to share laughter, stories, and moments of joy. Whether you're studying for exams, catching up with colleagues, or simply seeking solace in a quiet corner, you'll always find a warm welcome and a friendly smile here.
+          </p>
+        </div>
+
+        <div class="flex items-center space-x-7 mt-16">
+          <div class="space-y-7">
+            <img src="/images/atmosphere/imageA1.png" class="rounded-lg">
+            <img src="/images/atmosphere/imageA2.png" class="rounded-lg">
+          </div>
+
+          <img src="/images/atmosphere/imageB.png" class="rounded-lg">
+
+          <div class="space-y-7">
+            <img src="/images/atmosphere/imageC1.png" class="rounded-lg">
+            <img src="/images/atmosphere/imageC2.png" class="rounded-lg">
+          </div>
+        </div>
       </div>
     </div>
   </div>
