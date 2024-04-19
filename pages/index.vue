@@ -42,12 +42,45 @@ const coffees = [
   { label: 'Flat White Enchanted Mustard', price: '$5.00', image: '/images/coffees/c4.png'},
   { label: 'Don Macchiato and Donya', price: '$5.00', image: '/images/coffees/c5.png'},
 ]
+
+const reviews = [
+  {
+    label: 'Absolutely Magical',
+    description: 'From the cozy atmosphere to the delightful drinks, Magic Milktea is a gem! Loved every sip of the Enchanted Earl Grey Milk Tea.',
+    author: 'Sarah'
+  },
+  {
+    label: 'Charming Spot',
+    description: 'Magic Milktea never disappoints. The Fairy Forest Matcha Latte is a must-try, and the staff is always welcoming.',
+    author: 'Mark'
+  },
+  {
+    label: 'My Favorite Hangout',
+    description: 'Magic Milktea has become my go-to cafe. The drinks are top-notch, and the staff feels like family. Highly recommend!',
+    author: 'Emily'
+  },
+  {
+    label: 'Absolutely Magical',
+    description: 'From the cozy atmosphere to the delightful drinks, Magic Milktea is a gem! Loved every sip of the Enchanted Earl Grey Milk Tea.',
+    author: 'Sarah'
+  },
+  {
+    label: 'Charming Spot',
+    description: 'Magic Milktea never disappoints. The Fairy Forest Matcha Latte is a must-try, and the staff is always welcoming.',
+    author: 'Mark'
+  },
+  {
+    label: 'My Favorite Hangout',
+    description: 'Magic Milktea has become my go-to cafe. The drinks are top-notch, and the staff feels like family. Highly recommend!',
+    author: 'Emily'
+  }
+]
 </script>
 
 <template>
   <div class="w-full h-full relative overflow-y-auto overflow-x-hidden">
     <div class="relative flex items-center h-[804px] bg-[url('/images/bg.png')] z-10">
-      <div class="sticky-0 fixed top-6 w-full grid place-items-center">
+      <div class="sticky-0 fixed top-6 w-full grid place-items-center z-50">
         <div class="flex items-center py-3.5 px-20 bg-white rounded-2xl w-[1290px] justify-between shadow-md">
           <img src="/logo.svg" />
 
@@ -145,7 +178,7 @@ const coffees = [
               </TabPanel>
 
               <TabPanel>
-                <Milkteas :items="coffees" />
+                <ItemsSellers :items="coffees" />
               </TabPanel>
             </TabPanels>
           </TabGroup>
@@ -181,6 +214,46 @@ const coffees = [
             <img src="/images/atmosphere/imageC2.png" class="rounded-lg">
           </div>
         </div>
+      </div>
+    </div>
+
+    <div class="w-full py-44 h-[600px] mt-28 grid place-items-center relative overflow-hidden z-0">
+      <img src="/icons/comma.svg" class="absolute top-10 left-[525px] z-0">
+
+      <div class="w-[1040px] h-[535px] bg-orange-10 rounded-l-xl absolute top-0 right-0 z-10" />
+
+      <div 
+        class="absolute top-28 left-[320px] flex items-center z-20 space-x-40" 
+      >
+        <div class="flex items-center space-x-4">
+          <p class="text-[40px] text-black-10 font-bold uppercase w-60">Customer Reviews</p>
+          <img src="/icons/star.svg" class="w-10 h-10">
+        </div>
+
+        <div class="flex items-center space-x-6">
+          <div v-for="review in reviews" class="bg-white w-[360px] h-[280px] rounded-xl px-8 pt-10 drop-shadow-xl">
+            <p class="text-lg text-black-10 font-bold">"{{ review.label }}!"</p>
+            <p class="text-lg text-black-10 mt-2">{{ review.description }}</p>
+            <p class="text-lg text-black-10 mt-4">-- {{ review.author }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="w-full py-28 relative z-0 mt-8 space-y-10">
+      <div class="ml-[320px] space-y-8">
+        <div class="flex items-center space-x-4">
+          <p class="text-[40px] text-black-10 font-bold uppercase">Step into our enchanted Realm</p>
+          <img src="/icons/star.svg" class="w-10 h-10">
+        </div>
+
+        <p class="text-lg text-black-10">
+          Located in the heart of the city, our cozy cafe beckons you to indulge in a delightful journey of flavors and camaraderie.
+        </p>
+      </div>
+
+      <div class="w-full h-[429px] bg-[url('/images/map.png')] overflow-hidden relative">
+        <img src="/icons/pinpoint.svg" class="absolute top-[130px] left-[628px]">
       </div>
     </div>
   </div>
