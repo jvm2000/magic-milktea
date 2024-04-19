@@ -253,7 +253,7 @@ const reviews = [
       </div>
 
       <div class="w-full h-[429px] bg-[url('/images/map.png')] overflow-hidden relative">
-        <img src="/icons/pinpoint.svg" class="absolute top-[130px] left-[628px] animate-bounce">
+        <img src="/icons/pinpoint.svg" class="absolute top-[130px] left-[628px]">
       </div>
     </div>
   </div>
