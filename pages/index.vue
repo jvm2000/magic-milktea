@@ -42,6 +42,39 @@ const coffees = [
   { label: 'Flat White Enchanted Mustard', price: '$5.00', image: '/images/coffees/c4.png'},
   { label: 'Don Macchiato and Donya', price: '$5.00', image: '/images/coffees/c5.png'},
 ]
+
+const reviews = [
+  {
+    label: 'Absolutely Magical',
+    description: 'From the cozy atmosphere to the delightful drinks, Magic Milktea is a gem! Loved every sip of the Enchanted Earl Grey Milk Tea.',
+    author: 'Sarah'
+  },
+  {
+    label: 'Charming Spot',
+    description: 'Magic Milktea never disappoints. The Fairy Forest Matcha Latte is a must-try, and the staff is always welcoming.',
+    author: 'Mark'
+  },
+  {
+    label: 'My Favorite Hangout',
+    description: 'Magic Milktea has become my go-to cafe. The drinks are top-notch, and the staff feels like family. Highly recommend!',
+    author: 'Emily'
+  },
+  {
+    label: 'Absolutely Magical',
+    description: 'From the cozy atmosphere to the delightful drinks, Magic Milktea is a gem! Loved every sip of the Enchanted Earl Grey Milk Tea.',
+    author: 'Sarah'
+  },
+  {
+    label: 'Charming Spot',
+    description: 'Magic Milktea never disappoints. The Fairy Forest Matcha Latte is a must-try, and the staff is always welcoming.',
+    author: 'Mark'
+  },
+  {
+    label: 'My Favorite Hangout',
+    description: 'Magic Milktea has become my go-to cafe. The drinks are top-notch, and the staff feels like family. Highly recommend!',
+    author: 'Emily'
+  }
+]
 </script>
 
 <template>
@@ -179,6 +212,29 @@ const coffees = [
           <div class="space-y-7">
             <img src="/images/atmosphere/imageC1.png" class="rounded-lg">
             <img src="/images/atmosphere/imageC2.png" class="rounded-lg">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="w-full py-44 mt-28 grid place-items-center relative overflow-hidden">
+      <img src="/icons/comma.svg" class="absolute top-10 left-[525px] z-0">
+
+      <div class="w-[1040px] h-[535px] bg-orange-10 rounded-lg absolute top-0 right-0 z-10" />
+
+      <div 
+        class="absolute top-0 left-[320px] flex items-center z-20 space-x-40" 
+      >
+        <div class="flex items-center space-x-4">
+          <p class="text-[40px] text-black-10 font-bold uppercase w-60">Customer Reviews</p>
+          <img src="/icons/star.svg" class="w-10 h-10">
+        </div>
+
+        <div class="flex items-center space-x-8">
+          <div v-for="review in reviews" class="bg-white w-[360px] h-[301px] rounded-lg px-8 pt-10 shadow-md">
+            <p class="text-lg text-black-10 font-bold">"{{ review.label }}!"</p>
+            <p class="text-lg text-black-10 mt-2">{{ review.description }}</p>
+            <p class="text-lg text-black-10 mt-4">-- {{ review.author }}</p>
           </div>
         </div>
       </div>
