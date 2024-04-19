@@ -80,7 +80,7 @@ const reviews = [
 <template>
   <div class="w-full h-full relative overflow-y-auto overflow-x-hidden">
     <div class="relative flex items-center h-[804px] bg-[url('/images/bg.png')] z-10">
-      <div class="sticky-0 fixed top-6 w-full grid place-items-center">
+      <div class="sticky-0 fixed top-6 w-full grid place-items-center z-50">
         <div class="flex items-center py-3.5 px-20 bg-white rounded-2xl w-[1290px] justify-between shadow-md">
           <img src="/logo.svg" />
 
@@ -178,7 +178,7 @@ const reviews = [
               </TabPanel>
 
               <TabPanel>
-                <Milkteas :items="coffees" />
+                <ItemsSellers :items="coffees" />
               </TabPanel>
             </TabPanels>
           </TabGroup>
@@ -217,26 +217,43 @@ const reviews = [
       </div>
     </div>
 
-    <div class="w-full py-44 mt-28 grid place-items-center relative overflow-hidden">
+    <div class="w-full py-44 h-[600px] mt-28 grid place-items-center relative overflow-hidden z-0">
       <img src="/icons/comma.svg" class="absolute top-10 left-[525px] z-0">
 
-      <div class="w-[1040px] h-[535px] bg-orange-10 rounded-lg absolute top-0 right-0 z-10" />
+      <div class="w-[1040px] h-[535px] bg-orange-10 rounded-l-xl absolute top-0 right-0 z-10" />
 
       <div 
-        class="absolute top-0 left-[320px] flex items-center z-20 space-x-40" 
+        class="absolute top-28 left-[320px] flex items-center z-20 space-x-40" 
       >
         <div class="flex items-center space-x-4">
           <p class="text-[40px] text-black-10 font-bold uppercase w-60">Customer Reviews</p>
           <img src="/icons/star.svg" class="w-10 h-10">
         </div>
 
-        <div class="flex items-center space-x-8">
-          <div v-for="review in reviews" class="bg-white w-[360px] h-[301px] rounded-lg px-8 pt-10 shadow-md">
+        <div class="flex items-center space-x-6">
+          <div v-for="review in reviews" class="bg-white w-[360px] h-[280px] rounded-xl px-8 pt-10 drop-shadow-xl">
             <p class="text-lg text-black-10 font-bold">"{{ review.label }}!"</p>
             <p class="text-lg text-black-10 mt-2">{{ review.description }}</p>
             <p class="text-lg text-black-10 mt-4">-- {{ review.author }}</p>
           </div>
         </div>
+      </div>
+    </div>
+
+    <div class="w-full py-28 relative z-0 mt-8 space-y-10">
+      <div class="ml-[320px] space-y-8">
+        <div class="flex items-center space-x-4">
+          <p class="text-[40px] text-black-10 font-bold uppercase">Step into our enchanted Realm</p>
+          <img src="/icons/star.svg" class="w-10 h-10">
+        </div>
+
+        <p class="text-lg text-black-10">
+          Located in the heart of the city, our cozy cafe beckons you to indulge in a delightful journey of flavors and camaraderie.
+        </p>
+      </div>
+
+      <div class="w-full h-[429px] bg-[url('/images/map.png')] overflow-hidden relative">
+        <img src="/icons/pinpoint.svg" class="absolute top-[130px] left-[628px] animate-bounce">
       </div>
     </div>
   </div>
