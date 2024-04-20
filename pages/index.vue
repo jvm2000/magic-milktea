@@ -256,5 +256,42 @@ const reviews = [
         <img src="/icons/pinpoint.svg" class="absolute top-[130px] left-[628px]">
       </div>
     </div>
+
+    <div class="w-full pt-18 pb-14 relative z-0 mt-8 space-y-10">
+      <div class="ml-[320px] max-w-5xl grid grid-cols-2 gap-x-10">
+        <div class="flex flex-col space-y-20 items-start">
+          <div class="space-y-6">
+            <div class="flex items-center space-x-4">
+              <p class="text-[40px] text-black-10 font-bold uppercase">Send us a message</p>
+              <img src="/icons/star.svg" class="w-10 h-10">
+            </div>
+
+            <p class="text-base text-black-10 w-[499px]">
+              Your thoughts, inquiries, and feedback are welcome in our enchanted realm.
+            </p>
+
+            <div class="flex items-center space-x-4 pt-6">
+              <img src="/icons/tele.svg">
+              <p class="text-sm font-medium text-black-10">XXX-XXXX-XXXX</p>
+            </div>
+
+            <div class="flex items-center space-x-4">
+              <img src="/icons/at.svg">
+              <p class="text-sm font-medium text-black-10">magicmilktea@sample.com</p>
+            </div>
+          </div>
+
+          <div class="space-y-4">
+            <p class="text-lg text-black-10">Follow Us:</p>
+            <div class="flex items-center space-x-4">
+              <img src="/icons/followed/fb.svg">
+              <img src="/icons/followed/twitter.svg">
+              <img src="/icons/followed/tiktok.svg">
+              <img src="/icons/followed/ig.svg">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
