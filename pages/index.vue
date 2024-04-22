@@ -1,6 +1,12 @@
 <script setup lang="ts">
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/vue'
+import { twMerge } from 'tailwind-merge';
+import useScroll from '~/composables/useScroll';
 
+const scrolling  = ref(false);
+const prevScrollPos = ref(0);
+const scrollDirection = ref('up')
+const { container, startDrag, endDrag, handleDrag, data } = useScroll()
 const menus = ref([
   { id: 1, label: 'About Us' },
   { id: 2, label: 'Menu' },
@@ -75,13 +81,60 @@ const reviews = [
     author: 'Emily'
   }
 ]
+
+function handleScroll() {
+  const currentScrollPos = window.pageYOffset;
+  const scrollDirectory = currentScrollPos > prevScrollPos.value ? 'down' : 'up';
+
+  if (!scrolling.value) {
+    scrolling.value = true;
+  }
+
+  if (scrollDirectory === 'down') {
+    scrollDirection.value = 'down'
+  } else {
+    scrollDirection.value = 'up'
+  }
+
+  prevScrollPos.value = currentScrollPos;
+};
+
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener('scroll', handleScroll);
+});
 </script>
+
+<style scoped>
+.container {
+  width: 100%;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.content {
+  display: inline-block;
+}
+</style>
 
 <template>
   <div class="w-full h-full relative overflow-y-auto overflow-x-hidden">
     <div class="relative flex items-center h-[804px] bg-[url('/images/bg.png')] z-10">
-      <div class="sticky-0 fixed top-6 w-full grid place-items-center z-50">
-        <div class="flex items-center py-3.5 px-20 bg-white rounded-2xl w-[1290px] justify-between shadow-md">
+      <div 
+        :class="[twMerge(
+          'sticky-0 fixed top-6 w-full grid place-items-center z-50 transition-all duration-700 ease-in-out',
+          scrollDirection == 'down' && 'translate-y-[-30px] rounded-t-none'
+        )]"
+      >
+        <div 
+          :class="[twMerge(
+            'flex items-center py-3.5 px-20 bg-white rounded-2xl w-[1290px] justify-between shadow-md transition-all duration-700 ease-in-out',
+            scrollDirection == 'down' && 'shadow-xl'
+          )]"
+        >
           <img src="/logo.svg" />
 
           <div class="space-x-24">
@@ -217,24 +270,34 @@ const reviews = [
       </div>
     </div>
 
-    <div class="w-full py-44 h-[600px] mt-28 grid place-items-center relative overflow-hidden z-0">
+    <div class="w-full py-44 h-[600px] mt-28 grid place-items-center relative z-0">
       <img src="/icons/comma.svg" class="absolute top-10 left-[525px] z-0">
 
       <div class="w-[1040px] h-[535px] bg-orange-10 rounded-l-xl absolute top-0 right-0 z-10" />
 
       <div 
-        class="absolute top-28 left-[320px] flex items-center z-20 space-x-40" 
+        ref="container"
+        @mousedown="startDrag" 
+        @mousemove="handleDrag" 
+        @mouseup="endDrag" 
+        @mouseleave="endDrag"
+        class="absolute top-28 left-[320px] horizontal z-20 cursor-pointer" 
       >
-        <div class="flex items-center space-x-4">
-          <p class="text-[40px] text-black-10 font-bold uppercase w-60">Customer Reviews</p>
-          <img src="/icons/star.svg" class="w-10 h-10">
-        </div>
+        <div
+          :style="{ transform: `translateX(${data.scrollX}px)` }"
+          class="flex items-center space-x-40"
+        >
+          <div class="flex items-center space-x-4">
+            <p class="text-[40px] text-black-10 font-bold uppercase w-60">Customer Reviews</p>
+            <img src="/icons/star.svg" class="w-10 h-10">
+          </div>
 
-        <div class="flex items-center space-x-6">
-          <div v-for="review in reviews" class="bg-white w-[360px] h-[280px] rounded-xl px-8 pt-10 drop-shadow-xl">
-            <p class="text-lg text-black-10 font-bold">"{{ review.label }}!"</p>
-            <p class="text-lg text-black-10 mt-2">{{ review.description }}</p>
-            <p class="text-lg text-black-10 mt-4">-- {{ review.author }}</p>
+          <div class="flex items-center space-x-6">
+            <div v-for="review in reviews" class="bg-white w-[360px] h-[280px] rounded-xl px-8 pt-10 drop-shadow-xl">
+              <p class="text-lg text-black-10 font-bold">"{{ review.label }}!"</p>
+              <p class="text-lg text-black-10 mt-2">{{ review.description }}</p>
+              <p class="text-lg text-black-10 mt-4">-- {{ review.author }}</p>
+            </div>
           </div>
         </div>
       </div>
@@ -258,7 +321,7 @@ const reviews = [
     </div>
 
     <div class="w-full pt-18 pb-14 relative z-0 mt-8 space-y-10">
-      <div class="ml-[320px] max-w-5xl grid grid-cols-2 gap-x-10">
+      <div class="ml-[320px] max-w-7xl grid grid-cols-2 gap-x-10">
         <div class="flex flex-col space-y-20 items-start">
           <div class="space-y-6">
             <div class="flex items-center space-x-4">
@@ -290,6 +353,43 @@ const reviews = [
               <img src="/icons/followed/ig.svg">
             </div>
           </div>
+        </div>
+
+        <div class="flex flex-col space-y-7 mt-14">
+          <input 
+            type="email"
+            class="w-full rounded-lg border border-[#ADADAD] px-6 py-4 bg-[#F7F7F7] text-sm"
+            placeholder="Email"
+          >
+
+          <input 
+            type="text"
+            class="w-full rounded-lg border border-[#ADADAD] px-6 py-4 bg-[#F7F7F7] text-sm"
+            placeholder="Subject"
+          >
+
+          <textarea 
+            type="text"
+            class="w-full rounded-lg border border-[#ADADAD] px-6 py-4 bg-[#F7F7F7] text-sm h-[219px] resize-none"
+            placeholder="Email"
+          ></textarea>
+
+          <div class="flex items-center justify-end">
+            <button class="px-6 justify-center bg-orange-10 py-3 rounded-full cursor-pointer active:mt-[1px]">
+              <p class="text-sm text-white uppercase font-semibold">Send</p>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex flex-col place-items-center w-full bg-[#1D1814] py-8">
+      <div class="max-w-7xl w-full space-y-5">
+        <div class="border-b border-orange-10 w-full" />
+
+        <div class="flex items-center justify-between">
+          <p class="text-sm text-orange-10 font-sans">Designed by <span class="font-bold">Frey Daryl Hongoy</span></p>
+          <p class="text-sm text-orange-10 font-sans"><span class="font-bold">Coded by </span>John Vincent Miñoza</p>
         </div>
       </div>
     </div>

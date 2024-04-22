@@ -19,6 +19,7 @@
   "dependencies": {
     "@headlessui/vue": "^1.7.20",
     "cross-env": "^7.0.3",
-    "drag-scroll-vue3": "^1.0.7"
+    "drag-scroll-vue3": "^1.0.7",
+    "tailwind-merge": "^2.3.0"
   }
 }
