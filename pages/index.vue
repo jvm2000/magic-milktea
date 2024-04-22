@@ -1,17 +1,16 @@
 <script setup lang="ts">
-import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/vue'
+import { TabGroup, TabList, Tab, TabPanels, TabPanel, provideUseId } from '@headlessui/vue'
 import { twMerge } from 'tailwind-merge';
-import useScroll from '~/composables/useScroll';
 
-const scrolling  = ref(false);
+provideUseId(() => useId())
+
 const prevScrollPos = ref(0);
-const scrollDirection = ref('up')
 const { container, startDrag, endDrag, handleDrag, data } = useScroll()
 const menus = ref([
-  { id: 1, label: 'About Us' },
-  { id: 2, label: 'Menu' },
-  { id: 3, label: 'Our Shop' },
-  { id: 4, label: 'Location' },
+  { id: 1, label: 'About Us', path: '#about-us' },
+  { id: 2, label: 'Menu', path: '#menu' },
+  { id: 3, label: 'Our Shop', path: '#our-shop' },
+  { id: 4, label: 'Location', path: '#location' },
 ])
 
 const bestSellersItems = [
@@ -82,30 +81,21 @@ const reviews = [
   }
 ]
 
+const menuBarShouldBeShowing = computed(() => {
+  if (prevScrollPos.value > 800) return true
+
+  return false
+})
+
 function handleScroll() {
   const currentScrollPos = window.pageYOffset;
-  const scrollDirectory = currentScrollPos > prevScrollPos.value ? 'down' : 'up';
-
-  if (!scrolling.value) {
-    scrolling.value = true;
-  }
-
-  if (scrollDirectory === 'down') {
-    scrollDirection.value = 'down'
-  } else {
-    scrollDirection.value = 'up'
-  }
 
   prevScrollPos.value = currentScrollPos;
 };
 
 onMounted(() => {
   window.addEventListener('scroll', handleScroll);
-});
-
-onBeforeUnmount(() => {
-  window.removeEventListener('scroll', handleScroll);
-});
+})
 </script>
 
 <style scoped>
@@ -118,6 +108,12 @@ onBeforeUnmount(() => {
 .content {
   display: inline-block;
 }
+
+.prevent-select {
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+}
 </style>
 
 <template>
@@ -126,19 +122,19 @@ onBeforeUnmount(() => {
       <div 
         :class="[twMerge(
           'sticky-0 fixed top-6 w-full grid place-items-center z-50 transition-all duration-700 ease-in-out',
-          scrollDirection == 'down' && 'translate-y-[-30px] rounded-t-none'
+          menuBarShouldBeShowing && 'translate-y-[-30px] rounded-t-none'
         )]"
       >
         <div 
           :class="[twMerge(
             'flex items-center py-3.5 px-20 bg-white rounded-2xl w-[1290px] justify-between shadow-md transition-all duration-700 ease-in-out',
-            scrollDirection == 'down' && 'shadow-xl'
+            menuBarShouldBeShowing && 'shadow-xl'
           )]"
         >
           <img src="/logo.svg" />
 
           <div class="space-x-24">
-            <a v-for="menu in menus" href="#" class="text-sm uppercase font-semibold text-black">{{ menu.label }}</a>
+            <a v-for="menu in menus" :href="menu.path" class="text-sm uppercase font-semibold text-black">{{ menu.label }}</a>
           </div>
 
           <button class="px-5 justify-center bg-orange-10 py-2 rounded-full cursor-pointer active:mt-[1px]">
@@ -164,7 +160,7 @@ onBeforeUnmount(() => {
       </div>
     </div>
 
-    <div class="w-full py-28 flex items-center relative z-0">
+    <div class="w-full py-28 flex items-center relative z-0" id="about-us">
       <img src="/icons/star.svg" class="w-72 h-72 absolute -left-16 -top-6 opacity-10 rotate-6">
 
       <img src="/icons/star.svg" class="w-12 h-12 absolute left-56 top-10 opacity-10">
@@ -190,7 +186,7 @@ onBeforeUnmount(() => {
       </div>
     </div>
 
-    <div class="w-full py-28 grid place-items-center relative z-0">
+    <div class="w-full py-28 grid place-items-center relative z-0" id="menu">
       <div class="flex items-center space-x-4">
         <p class="text-[40px] text-black-10 font-bold uppercase">Our Best Sellers</p>
         <img src="/icons/star.svg" class="w-10 h-10">
@@ -241,7 +237,7 @@ onBeforeUnmount(() => {
       </div>
     </div>
 
-    <div class="w-full py-28 grid place-items-center relative z-0">
+    <div class="w-full py-28 grid place-items-center relative z-0" id="our-shop">
       <div class="flex flex-col items-start">
         <div class="flex flex-col items-start space-y-10">
           <div class="flex items-center space-x-4">
@@ -281,7 +277,7 @@ onBeforeUnmount(() => {
         @mousemove="handleDrag" 
         @mouseup="endDrag" 
         @mouseleave="endDrag"
-        class="absolute top-28 left-[320px] horizontal z-20 cursor-pointer" 
+        class="absolute top-28 left-[320px] horizontal z-20 cursor-pointer prevent-select" 
       >
         <div
           :style="{ transform: `translateX(${data.scrollX}px)` }"
@@ -293,7 +289,7 @@ onBeforeUnmount(() => {
           </div>
 
           <div class="flex items-center space-x-6">
-            <div v-for="review in reviews" class="bg-white w-[360px] h-[280px] rounded-xl px-8 pt-10 drop-shadow-xl">
+            <div v-for="review in reviews" class="bg-white w-[360px] h-[280px] rounded-xl px-8 pt-10 drop-shadow-xl" aria-readonly="true">
               <p class="text-lg text-black-10 font-bold">"{{ review.label }}!"</p>
               <p class="text-lg text-black-10 mt-2">{{ review.description }}</p>
               <p class="text-lg text-black-10 mt-4">-- {{ review.author }}</p>
@@ -303,7 +299,7 @@ onBeforeUnmount(() => {
       </div>
     </div>
 
-    <div class="w-full py-28 relative z-0 mt-8 space-y-10">
+    <div class="w-full py-28 relative z-0 mt-8 space-y-10" id="location">
       <div class="ml-[320px] space-y-8">
         <div class="flex items-center space-x-4">
           <p class="text-[40px] text-black-10 font-bold uppercase">Step into our enchanted Realm</p>
